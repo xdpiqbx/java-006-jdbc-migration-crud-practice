@@ -1,9 +1,7 @@
 package cw.train.cli;
 
 import cw.train.storage.ConnectionProvider;
-import cw.train.ticket.TicketDAOService;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Scanner;
 
@@ -18,6 +16,10 @@ public class CliFSM {
         this.connectionProvider = connectionProvider;
         state = new IdleState(this);
         scanner = new Scanner(System.in);
+        mainLoop();
+    }
+
+    private void mainLoop() {
         while (true){
             String command = scanner.nextLine();
             switch(command){
@@ -41,16 +43,8 @@ public class CliFSM {
         state.newTickedRequested();
     }
 
-    public void ticketOrdered(){
-        state.ticketOrdered();
-    }
-
     public void planetStatsRequested(){
         state.planetStatsRequested();
-    }
-
-    public void planetStatsPrinted(){
-        state.planetStatsPrinted();
     }
 
     public void unknownCommand(String cmd){
