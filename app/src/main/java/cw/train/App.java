@@ -3,11 +3,24 @@
  */
 package cw.train;
 
+import cw.train.cli.CliFSM;
+import cw.train.storage.ConnectionProvider;
 import cw.train.storage.DatabaseInitService;
+
+import java.sql.SQLException;
 
 public class App {
 
     public static void main(String[] args) {
         DatabaseInitService.initDb();
+        ConnectionProvider connectionProvider = new ConnectionProvider();
+
+        new CliFSM(connectionProvider);
+
+        try {
+            connectionProvider.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

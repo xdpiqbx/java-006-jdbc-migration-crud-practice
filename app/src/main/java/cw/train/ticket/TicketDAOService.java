@@ -33,6 +33,8 @@ public class TicketDAOService {
         }
     }
 
+    // synchronized цілком оправдано для операцій запису
+    //  public synchronized long create(Ticket ticket){
     public long create(Ticket ticket){
         Future<Long> ft = insertExecutor.submit(() -> {
             createSt.setLong(1, ticket.getPassengerId());
